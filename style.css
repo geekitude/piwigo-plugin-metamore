@@ -1,0 +1,119 @@
+#metamore {
+    margin: 10px auto;
+}
+
+/*
+#metamore span.meta a:not(:first-child) {
+    margin: 0 0 0 .8em !important;
+}
+
+[dir=ltr] #metamore span.meta a:not(:first-child) {
+    margin: 0 .8em 0 0;
+}
+*/
+
+#metamore a {
+    /*color: linen;*/
+}
+
+#metamore a:hover {
+    /*color: red;*/
+}
+
+#metamore #hardware,
+#metamore #settings {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 10px;
+}
+
+#metamore #hardware div,
+#metamore #settings div {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+span.meta {
+    display: block;
+    filter: brightness(0.6) sepia(1) hue-rotate(160deg) saturate(3);
+    background-size: 30px 30px !important;
+}
+
+span.meta.camera {
+    background: url(./images/camera.svg) no-repeat center left;
+}
+
+span.meta.camera.phone {
+    background: url(./images/smartphone.svg) no-repeat center left;
+}
+
+span.meta.camera.compact {
+    background: url(./images/compact-camera.svg) no-repeat center left;
+}
+
+span.meta.camera.slr {
+    background: url(./images/slr-camera.svg) no-repeat center left;
+}
+
+span.meta.lenstype {
+    background: url(./images/lens.svg) no-repeat center left;
+}
+
+span.meta.lens35 {
+    background: url(./images/focal-length.svg) no-repeat center left;
+}
+
+span.meta.aperture {
+    background: url(./images/aperture.svg) no-repeat center left;
+}
+
+span.meta.time {
+    background: url(./images/stopwatch.svg) no-repeat center left;
+}
+
+span.meta.iso {
+    background: url(./images/iso.svg) no-repeat center left;
+}
+
+span.meta.exposurebias {
+    background: url(./images/exposure.svg) no-repeat center left;
+}
+
+span.meta.flash {
+    background: url(./images/flash-on.svg) no-repeat center left;
+}
+
+span.meta.flash.auto {
+    background: url(./images/flash-auto.svg) no-repeat center left;
+}
+
+span.meta.flash.no {
+    background: url(./images/flash-off.svg) no-repeat center left;
+}
+
+#theImage {
+    display: flex !important;
+    flex-direction: column;
+}
+
+#theMainImage {
+    margin: 0 auto;
+}
+
+p.event {
+    width: 60%;
+    margin: 0 auto 5px auto;
+    text-align: right;
+    color: #888888;
+    order: 9;
+}
+
+p.imageComment {
+    margin-bottom: 5px;
+}
+
+#metamore {
+    order: 10 !important;
+}
