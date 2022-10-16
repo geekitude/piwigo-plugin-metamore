@@ -1,6 +1,8 @@
 # Piwigo Metamore
 Get more out of your metadata
 
+![Metamore - Pwigo plugin](/images/metamore.jpg)
+
 * Internal name: `LocalFilesEditor` (directory name in `plugins/`)
 * Plugin page: https://github.com/geekitude/piwigo-plugin-metamore
 * Translation: ???
