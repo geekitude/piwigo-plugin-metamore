@@ -294,7 +294,7 @@ function metamore_assign()
         $metamore_settings .= '<div title="'.$metamore_tooltips['flash'].'"><span class="meta flash'.$extraclass.'"><img src="./plugins/metamore/images/placeholder.png"></span>'.ltrim($retValue, ", ").'</div>';
     }
 
-    $template->assign('METAMORE_EVENT', $picture['current']['event']);
+    $template->assign('METAMORE_HEADLINE', $picture['current']['headline']);
     $template->assign('METAMORE_HARDWARE', $metamore_hardware);
     $template->assign('METAMORE_SETTINGS', $metamore_settings);
 }
@@ -309,7 +309,7 @@ function metamore_prefilter($content)
     $metamore_skeleton .= '</div><!-- /metamore -->{combine_css path="plugins/metamore/style.css"}';
 
     $search = '<p class="imageComment">';
-    $replace = '<p class="event">{$METAMORE_EVENT}</p><p class="imageComment">';
+    $replace = '<p class="headline">{$METAMORE_HEADLINE}</p><p class="imageComment">';
 
     $content = str_replace($search, $replace, $content);
 
