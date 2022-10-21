@@ -123,6 +123,7 @@ add_event_handler('loc_end_picture', 'metamore_assign');
 function metamore_assign()
 {
     global $template, $picture, $metamore_exif, $metamore_permalinks, $metamore_tooltips;
+//print_r($picture['current']);
 
     if (isset($picture['current']['is_gvideo']) and $picture['current']['is_gvideo'])
     {
@@ -294,6 +295,7 @@ function metamore_assign()
         $metamore_settings .= '<div title="'.$metamore_tooltips['flash'].'"><span class="meta flash'.$extraclass.'"><img src="./plugins/metamore/images/placeholder.png"></span>'.ltrim($retValue, ", ").'</div>';
     }
 
+    $template->assign('METAMORE_OBJECTNAME', $picture['current']['objectname']);
     $template->assign('METAMORE_HEADLINE', $picture['current']['headline']);
     $template->assign('METAMORE_HARDWARE', $metamore_hardware);
     $template->assign('METAMORE_SETTINGS', $metamore_settings);
@@ -309,7 +311,7 @@ function metamore_prefilter($content)
     $metamore_skeleton .= '</div><!-- /metamore -->{combine_css path="plugins/metamore/style.css"}';
 
     $search = '<p class="imageComment">';
-    $replace = '<p class="headline">{$METAMORE_HEADLINE}</p><p class="imageComment">';
+    $replace = '<p class="headline">{$METAMORE_HEADLINE}</p><h2 class="objectname">{$METAMORE_OBJECTNAME}</h2><p class="imageComment">';
 
     $content = str_replace($search, $replace, $content);
 
