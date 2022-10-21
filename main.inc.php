@@ -53,6 +53,7 @@ function metamore_data($content)
     $metamore_tooltips['iso'] = (isset($lang['exif_field_ISOSpeedRatings']) ? $lang['exif_field_ISOSpeedRatings'] : "ISO");
     $metamore_tooltips['exposurebias'] = (isset($lang['exif_field_ExposureBiasValue']) ? $lang['exif_field_ExposureBiasValue'] : "Exposure Compensation");
     $metamore_tooltips['flash'] = (isset($lang['exif_field_Flash']) ? $lang['exif_field_Flash'] : "Flash");
+    $metamore_tooltips['resolution'] = (isset($lang['exif_resolution']) ? $lang['exif_resolution'] : "Resolution");
 
     return $content;
 }
@@ -123,7 +124,7 @@ add_event_handler('loc_end_picture', 'metamore_assign');
 function metamore_assign()
 {
     global $template, $picture, $metamore_exif, $metamore_permalinks, $metamore_tooltips;
-//print_r($picture['current']);
+//print_r($picture['current']['width']);
 
     if (isset($picture['current']['is_gvideo']) and $picture['current']['is_gvideo'])
     {
@@ -158,11 +159,11 @@ function metamore_assign()
     $extraclass = null;
     if (isset($metamore_exif['Make']) && ($metamore_exif['Make'] != null))
     {
-        $make .= '<a href="http://localhost:88/index.php?/category/'.$metamore_permalinks['make'].'" title="'.$metamore_tooltips['make'].'">'.$swap[$metamore_exif['Make']].'</a>';
+        $make .= '<a class="make" href="http://localhost:88/index.php?/category/'.$metamore_permalinks['make'].'" title="'.$metamore_tooltips['make'].'">'.$swap[$metamore_exif['Make']].'</a>';
     }
     if (isset($metamore_exif['Model']) && ($metamore_exif['Model'] != null))
     {
-        $model .= '<a href="http://localhost:88/index.php?/category/'.$metamore_permalinks['model'].'" title="'.$metamore_tooltips['model'].'">'.$swap[$metamore_exif['Model']].'</a>';
+        $model .= '<a class="model" href="http://localhost:88/index.php?/category/'.$metamore_permalinks['model'].'" title="'.$metamore_tooltips['model'].'">'.$swap[$metamore_exif['Model']].'</a>';
         if (in_array($metamore_exif['Model'], array("SM-G970F", "blah","blahblah")))
         {
             $extraclass = " phone";
@@ -196,6 +197,17 @@ function metamore_assign()
     if (isset($picture['current']['lens35']) && ($picture['current']['lens35'] > 0))
     {
         $metamore_hardware .= '<div title="'.$metamore_tooltips['lens35'].'"><span class="meta lens35"><img src="./plugins/metamore/images/placeholder.png"></span><a href="http://localhost:88/index.php?/category/'.$metamore_permalinks['lens35'].'">'.$picture['current']['lens35'].'&#xA0;mm</a></div>';
+    }
+    // resolution
+    if (isset($picture['current']['width']) and isset($picture['current']['height'])) {
+        $resolution = $picture['current']['width'] * $picture['current']['height'] / 1000;
+        if ($resolution > 1000) {
+            $resolution = $resolution / 1000;
+            $unit = "MP";
+        } else {
+            $unit = "KP";
+        }
+        $metamore_hardware .= '<div title="'.$metamore_tooltips['resolution'].'"><span class="meta resolution"><img src="./plugins/metamore/images/placeholder.png"></span><span>'.floor($resolution).'&#xA0;'.$unit.'</span></div>';
     }
 
     $metamore_settings = null;

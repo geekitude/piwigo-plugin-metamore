@@ -35,61 +35,69 @@
     gap: 7px;
 }
 
-span.meta {
+#metamore span.meta {
     display: block;
     filter: brightness(0.6) sepia(1) hue-rotate(160deg) saturate(3);
     background-size: 30px 30px !important;
 }
 
-span.meta.camera {
+#metamore span.meta.camera {
     background: url(./images/camera.svg) no-repeat center left;
 }
 
-span.meta.camera.phone {
+#metamore span.meta.camera.phone {
     background: url(./images/smartphone.svg) no-repeat center left;
 }
 
-span.meta.camera.compact {
+#metamore span.meta.camera.compact {
     background: url(./images/compact-camera.svg) no-repeat center left;
 }
 
-span.meta.camera.slr {
+#metamore span.meta.camera.slr {
     background: url(./images/slr-camera.svg) no-repeat center left;
 }
 
-span.meta.lenstype {
+#metamore a.make {
+    font-variant: small-caps;
+}
+
+#metamore span.meta.lenstype {
     background: url(./images/lens.svg) no-repeat center left;
 }
 
-span.meta.lens35 {
+#metamore span.meta.lens35 {
     background: url(./images/focal-length.svg) no-repeat center left;
 }
 
-span.meta.aperture {
+#metamore span.meta.resolution {
+    background: url(./images/resolution.svg) no-repeat center left;
+}
+
+#metamore span.meta.aperture {
     background: url(./images/aperture.svg) no-repeat center left;
 }
 
-span.meta.time {
+#metamore span.meta.time {
     background: url(./images/stopwatch.svg) no-repeat center left;
 }
 
-span.meta.iso {
+#metamore span.meta.iso {
     background: url(./images/iso.svg) no-repeat center left;
 }
 
-span.meta.exposurebias {
+#metamore span.meta.exposurebias {
     background: url(./images/exposure.svg) no-repeat center left;
 }
 
-span.meta.flash {
+#metamore span.meta.flash {
     background: url(./images/flash-on.svg) no-repeat center left;
 }
 
-span.meta.flash.auto {
+#metamore span.meta.flash.auto {
     background: url(./images/flash-auto.svg) no-repeat center left;
 }
 
-span.meta.flash.no {
+#metamore span.meta.flash.no {
     background: url(./images/flash-off.svg) no-repeat center left;
 }
 
