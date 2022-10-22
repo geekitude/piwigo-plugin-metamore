@@ -124,7 +124,6 @@ add_event_handler('loc_end_picture', 'metamore_assign');
 function metamore_assign()
 {
     global $template, $picture, $metamore_exif, $metamore_permalinks, $metamore_tooltips;
-//print_r($picture['current']['width']);
 
     if (isset($picture['current']['is_gvideo']) and $picture['current']['is_gvideo'])
     {
@@ -157,6 +156,13 @@ function metamore_assign()
     $model = null;
     $tooltip = null;
     $extraclass = null;
+
+    $extra = array();
+    if (file_exists('./local/metamore/extra.php'))
+    {
+        include('./local/metamore/extra.php');
+    }
+
     if (isset($metamore_exif['Make']) && ($metamore_exif['Make'] != null))
     {
         $make .= '<a class="make" href="http://localhost:88/index.php?/category/'.$metamore_permalinks['make'].'" title="'.$metamore_tooltips['make'].'">'.$swap[$metamore_exif['Make']].'</a>';
@@ -164,15 +170,12 @@ function metamore_assign()
     if (isset($metamore_exif['Model']) && ($metamore_exif['Model'] != null))
     {
         $model .= '<a class="model" href="http://localhost:88/index.php?/category/'.$metamore_permalinks['model'].'" title="'.$metamore_tooltips['model'].'">'.$swap[$metamore_exif['Model']].'</a>';
-        if (in_array($metamore_exif['Model'], array("SM-G970F", "blah","blahblah")))
+        if (isset($extra[$metamore_exif['Model']]['picto']) and ($extra[$metamore_exif['Model']]['picto'] != null))
         {
-            $extraclass = " phone";
-        } elseif (in_array($metamore_exif['Model'], array("COOLPIX S600","FZ-200")))
+            $extraclass = $extra[$metamore_exif['Model']]['picto'];
+        } else
         {
-            $extraclass = " compact";
-        } elseif (in_array($metamore_exif['Model'], array("bouh","bouhbouh")))
-        {
-            $extraclass = " slr";
+            $extraclass = "camera question";
         }
     }
     if ($make!=null || $model!=null)
@@ -186,7 +189,7 @@ function metamore_assign()
             $tooltip .= " & ".$metamore_tooltips['model'];
         }
         $tooltip=ltrim($tooltip, " & ");
-        $metamore_hardware .= '<div title="'.$tooltip.'"><span class="meta camera'.$extraclass.'"><img src="./plugins/metamore/images/placeholder.png"></span>'.$make.$model.'</div>';
+        $metamore_hardware .= '<div title="'.$tooltip.'"><span class="meta '.$extraclass.'"><img src="./plugins/metamore/images/placeholder.png"></span>'.$make.$model.'</div>';
     }
     // lenstype
     if (isset($picture['current']['lenstype']) && ($picture['current']['lenstype'] != null))
@@ -199,20 +202,28 @@ function metamore_assign()
         $metamore_hardware .= '<div title="'.$metamore_tooltips['lens35'].'"><span class="meta lens35"><img src="./plugins/metamore/images/placeholder.png"></span><a href="http://localhost:88/index.php?/category/'.$metamore_permalinks['lens35'].'">'.$picture['current']['lens35'].'&#xA0;mm</a></div>';
     }
     // resolution
-    if (isset($picture['current']['width']) and isset($picture['current']['height'])) {
+    if (isset($picture['current']['width']) and isset($picture['current']['height']))
+    {
         $resolution = $picture['current']['width'] * $picture['current']['height'] / 1000;
-        if ($resolution > 1000) {
+        if ($resolution > 1000)
+        {
             $resolution = $resolution / 1000;
             $unit = "MP";
-        } else {
+        } else
+        {
             $unit = "KP";
+        }
+        if (isset($metamore_exif['Model']) and isset($extra[$metamore_exif['Model']]['sensor']) and ($extra[$metamore_exif['Model']]['sensor'] != null))
+        {
+            $metamore_tooltips['resolution'] = 'Capteur '.$extra[$metamore_exif['Model']]['sensor'];
         }
         $metamore_hardware .= '<div title="'.$metamore_tooltips['resolution'].'"><span class="meta resolution"><img src="./plugins/metamore/images/placeholder.png"></span><span>'.floor($resolution).'&#xA0;'.$unit.'</span></div>';
     }
 
     $metamore_settings = null;
     // aperture
-    if (isset($metamore_exif['COMPUTED']['ApertureFNumber']) && ($metamore_exif['COMPUTED']['ApertureFNumber'] != null)) {
+    if (isset($metamore_exif['COMPUTED']['ApertureFNumber']) && ($metamore_exif['COMPUTED']['ApertureFNumber'] != null))
+    {
         $metamore_settings .= '<div title="'.$metamore_tooltips['fnumber'].'"><span class="meta aperture"><img src="./plugins/metamore/images/placeholder.png"></span>'.$metamore_exif['COMPUTED']['ApertureFNumber'].'</div>';
     }
     // exposuretime
@@ -253,11 +264,13 @@ function metamore_assign()
         $metamore_settings .= '<div title="'.$metamore_tooltips['time'].'"><span class="meta time"><img src="./plugins/metamore/images/placeholder.png"></span>'.$value.'&#xA0;s</div>';
     }
     // iso
-    if (isset($metamore_exif['ISOSpeedRatings']) && ($metamore_exif['ISOSpeedRatings'] != null)) {
+    if (isset($metamore_exif['ISOSpeedRatings']) && ($metamore_exif['ISOSpeedRatings'] != null))
+    {
         $metamore_settings .= '<div title="'.$metamore_tooltips['iso'].'"><span class="meta iso"><img src="./plugins/metamore/images/placeholder.png"></span>'.$metamore_exif['ISOSpeedRatings'].'</div>';
     }
     // exposure compensation
-    if (isset($metamore_exif['ExposureBiasValue']) && ($metamore_exif['ExposureBiasValue'] != null)) {
+    if (isset($metamore_exif['ExposureBiasValue']) && ($metamore_exif['ExposureBiasValue'] != null))
+    {
         $tokens = explode('/', $metamore_exif['ExposureBiasValue']);
         if (0 == $tokens[1])
         {
@@ -267,7 +280,8 @@ function metamore_assign()
         $metamore_settings .= '<div title="'.$metamore_tooltips['exposurebias'].'"><span class="meta exposurebias"><img src="./plugins/metamore/images/placeholder.png"></span>'.$value.'&#xA0;EV</div>';
     }
     // flash
-    if (isset($metamore_exif['Flash'])) {
+    if (isset($metamore_exif['Flash']))
+    {
         $extraclass = null;
         $retValue = null;
         $value = (int)$metamore_exif['Flash'];

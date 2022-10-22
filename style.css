@@ -45,7 +45,7 @@
     background: url(./images/camera.svg) no-repeat center left;
 }
 
-#metamore span.meta.camera.phone {
+#metamore span.meta.camera.smartphone {
     background: url(./images/smartphone.svg) no-repeat center left;
 }
 
@@ -55,6 +55,11 @@
 
 #metamore span.meta.camera.slr {
     background: url(./images/slr-camera.svg) no-repeat center left;
+}
+
+#metamore span.meta.camera.question {
+    background: url(./images/question.svg) no-repeat center left;
+    filter: brightness(0.6) sepia(1) hue-rotate(340deg) saturate(3);
 }
 
 #metamore a.make {
